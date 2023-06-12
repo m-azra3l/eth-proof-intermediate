@@ -2,7 +2,7 @@
 
 pragma solidity ^0.8.9;
 
-contract FirstProject {
+contract ErrorHandling {
     uint public balance = 0;
 
     // Function to deposit an amount with a require statement
@@ -38,9 +38,9 @@ contract FirstProject {
     // Function to demonstrate the use of assert statements
     function assertFunction() public pure {
         // Divide 10 by 0, which should trigger a division by zero error and revert the transaction
-        uint result = divideRequire(10, 0);
+        uint result = divideRequire(10, 2);
         // Assert that the result is equal to 5, which will always fail and cause the transaction to fail
-        assert(result == 5);
+        assert(result == 6);
     }
 
     // Function to demonstrate the use of revert statements
