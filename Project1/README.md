@@ -1,6 +1,6 @@
 # Project 1
 
-This is the first project in ETH-Proof-Intermediate, in this project I am tasked to a create smart contract that implements the require(), assert() and revert() statements.
+This is the first project in ETH-Proof-Intermediate, in this project I am tasked to create smart contract that implements the require(), assert() and revert() statements.
 
 ## Getting Started
 
