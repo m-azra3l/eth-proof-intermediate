@@ -27,7 +27,7 @@ contract EPITokenMint {
     }
 
     // This function allows only the owner of the contract to mint new tokens
-    function mint(address _recipient,uint256 _amount) public onlyOwner {
+    function mint(address _recipient, uint256 _amount) public onlyOwner {
         // Increase the total supply
         totalSupply += _amount;
         // Increase the balance of the specified address
