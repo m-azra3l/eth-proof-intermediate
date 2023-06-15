@@ -27,7 +27,7 @@ describe("EPITokenMint", function () {
   describe("Minting", function () {
     it("Should revert if minted by a non-owner", async function () {
       // Try to mint tokens by a non-owner
-      await expect(token.connect(addr1).mint(100)).to.be.revertedWith(
+      await expect(token.connect(addr1).mint(addr1.address, 100)).to.be.revertedWith(
         "Only owner can perform this action!"
       );
 
@@ -40,7 +40,7 @@ describe("EPITokenMint", function () {
   describe("Transferring", function () {
     it("Should transfer tokens between accounts", async function () {
       // Mint tokens
-      await token.mint(100);
+      await token.connect(owner).mint(owner.address, 100);
 
       // Transfer tokens from owner to addr1
       await token.transfer(addr1.address, 50);
@@ -52,7 +52,7 @@ describe("EPITokenMint", function () {
 
     it("Should fail if sender does not have enough tokens", async function () {
       // Mint tokens
-      await token.mint(100);
+      await token.connect(owner).mint(addr1.address, 100);
 
       // Try to transfer more tokens than the sender has
       await expect(token.transfer(addr1.address, 101)).to.be.revertedWith(
@@ -62,7 +62,7 @@ describe("EPITokenMint", function () {
 
     it("Should fail if sender tries to transfer tokens to themselves", async function () {
       // Mint tokens
-      await token.mint(100);
+      await token.connect(owner).mint(owner.address, 100);
 
       // Try to transfer tokens to the owner address (self-transfer)
       await expect(token.transfer(owner.address, 50)).to.be.revertedWith(
@@ -74,7 +74,7 @@ describe("EPITokenMint", function () {
   describe("Burning", function () {
     it("Should burn tokens and reduce total supply", async function () {
       // Mint tokens
-      await token.mint(100);
+      await token.connect(owner).mint(owner.address, 100);
 
       // Burn tokens
       await token.burn(50);
@@ -86,7 +86,7 @@ describe("EPITokenMint", function () {
 
     it("Should revert if the contract creator doesn't have sufficient balance to burn", async function () {
         // Mint tokens
-        await token.connect(owner).mint(100);
+        await token.connect(owner).mint(owner.address, 100);
   
         // Burn tokens
         await expect(token.connect(owner).burn(101)).to.be.revertedWith("Insufficient balance");
