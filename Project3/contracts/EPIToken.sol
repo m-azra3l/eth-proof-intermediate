@@ -26,25 +26,36 @@ contract EPITokenMint {
         _;
     }
 
-    // Function that allows the owner to mint new tokens
+    // This function allows only the owner of the contract to mint new tokens
     function mint(uint256 _amount) public onlyOwner {
+        // Increase the total supply
         totalSupply += _amount;
+        // Increase the balance of the specified address
         balance[msg.sender] += _amount;
     }
 
-    // Function that allows anyone to burn their own tokens
+    // This function allows anyone to burn their own tokens
+    // It takes one argument: the amount of tokens to burn
     function burn(uint256 _amount) public {
-        // Make sure the contract creator has sufficient balance
+        // Make sure the sender has enough tokens to burn
         require(balance[msg.sender] >= _amount, "Insufficient balance");
+        // Subtract the burn amount from the total supply
         totalSupply -= _amount;
+        // Subtract the burn amount from the sender's balance
         balance[msg.sender] -= _amount;
     }
 
     // Function that allows anyone to transfer tokens to another address
+    // This function transfers tokens from the sender to the recipient
+    // It takes two arguments: the recipient's address and the amount of tokens to transfer
     function transfer(address _recipient, uint256 _amount) public {
+        // Make sure the sender is not the recipient
         require(msg.sender != _recipient,"You can not transfer token(s) to yourself!");
+        // Make sure the sender has enough tokens to transfer
         require(balance[msg.sender] >= _amount, "Transfer amount exceeds balance");
+        // Subtract the transfer amount from the sender's balance
         balance[msg.sender] -= _amount;
+        // Add the transfer amount to the recipient's balance
         balance[_recipient] += _amount;
     }
 }
