@@ -83,5 +83,13 @@ describe("EPITokenMint", function () {
       expect(await token.balance(owner.address)).to.equal(50);
       expect(await token.totalSupply()).to.equal(50);
     });
+
+    it("Should revert if the contract creator doesn't have sufficient balance to burn", async function () {
+        // Mint tokens
+        await token.connect(owner).mint(100);
+  
+        // Burn tokens
+        await expect(token.connect(owner).burn(101)).to.be.revertedWith("Insufficient balance");
+      });
   });
 });

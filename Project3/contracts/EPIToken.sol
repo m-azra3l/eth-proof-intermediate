@@ -34,6 +34,8 @@ contract EPITokenMint {
 
     // Function that allows anyone to burn their own tokens
     function burn(uint256 _amount) public {
+        // Make sure the contract creator has sufficient balance
+        require(balance[msg.sender] >= _amount, "Insufficient balance");
         totalSupply -= _amount;
         balance[msg.sender] -= _amount;
     }
